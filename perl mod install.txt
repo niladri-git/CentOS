@@ -1,0 +1,181 @@
+$ perl -e 'use FileHandle; print $FileHandle::VERSION."\n"'
+2.02
+
+$ perl -e 'use Time::Local; print $Time::Local::VERSION."\n"'
+1.1901
+
+$ perl -e 'use CGI::Session; print $CGI::Session::VERSION."\n"'
+Can't locate CGI/Session.pm in @INC (@INC contains: /usr/local/lib/perl5 /usr/local/share/perl5 /usr/lib/perl5/vendor_perl /usr/share/perl5/vendor_perl /usr/lib/perl5 /usr/share/perl5 .) at -e line 1.
+BEGIN failed--compilation aborted at -e line 1.
+
++++
+
+[root@localhost Downloads]# rpm -qa | grep make
+make-3.81-20.el6.i686
+automake-1.11.1-4.el6.noarch
+
+[root@localhost Downloads]# yum info make
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.aol.in
+ * extras: centos.aol.in
+ * updates: centos.aol.in
+Installed Packages
+Name        : make
+Arch        : i686
+Epoch       : 1
+Version     : 3.81
+Release     : 20.el6
+Size        : 1.0 M
+Repo        : installed
+From repo   : anaconda-CentOS-201311271240.i386
+Summary     : A GNU tool which simplifies the build process for users
+URL         : http://www.gnu.org/software/make/
+License     : GPLv2+
+Description : A GNU tool for controlling the generation of executables and other
+            : non-source files of a program from the program's source files. Make
+            : allows users to build and install packages without any significant
+            : knowledge about the details of the build process. The details about
+            : how the program should be built are provided for make in the program's
+            : makefile.
+
+++++
+
+[root@localhost CGI-Session-4.48]# yum -y install perl-CPAN
+
+$ cpan
+
+If you run this for the first time it asks you some configuration questions. In most cases it works just fine if you tell it to "go figure it out yourself." Once configured you will see a cpan> shell prompt. 
+
+[root@localhost CGI-Session-4.48]# perl -MCPAN -e shell
+Terminal does not support AddHistory.
+
+cpan shell -- CPAN exploration and modules installation (v1.9402)
+Enter 'h' for help.
+
+cpan[1]> exit
+
+++++
+
+[root@localhost CGI-Session-4.48]# perl -e 'use CGI::Session; print $CGI::Session::VERSION."\n"'
+Can't locate CGI/Session.pm in @INC (@INC contains: /usr/local/lib/perl5 /usr/local/share/perl5 /usr/lib/perl5/vendor_perl /usr/share/perl5/vendor_perl /usr/lib/perl5 /usr/share/perl5 .) at -e line 1.
+BEGIN failed--compilation aborted at -e line 1.
+[root@localhost CGI-Session-4.48]#
+[root@localhost CGI-Session-4.48]# perl -MCPAN -e shell
+Terminal does not support AddHistory.
+
+cpan shell -- CPAN exploration and modules installation (v1.9402)
+Enter 'h' for help.
+
+cpan[1]> install CGI::Session
+
+[root@localhost CGI-Session-4.48]# perl -e 'use CGI::Session; print $CGI::Session::VERSION."\n"'
+4.48
+
+++++
+
+$ perl -MCGI::Session -le "print(CGI::Session->VERSION)"
+
+$ cat perl_mod_ver.sh
+#!/bin/bash
+
+MOD_NAME=$1
+
+perl -M$MOD_NAME -le "print($MOD_NAME->VERSION)"
+
+++++
+
+$ id
+uid=0(root) gid=0(root) groups=0(root) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+
+$ perl -MCPAN -e shell
+
+cpan[1]> install Bundle::CPAN
+
+cpan[2]> reload cpan
+
+cpan[3]> exit
+
+++++
+
+[root@localhost Downloads]# yum install yum-utils -y
+
+[root@localhost Downloads]# yum-complete-transaction
+
+++++
+
+[root@localhost scripts]# ./perl_mod_ver.sh Date::Format
+Can't locate Date/Format.pm in @INC (@INC contains: /usr/local/lib/perl5 /usr/local/share/perl5 /usr/lib/perl5/vendor_perl /usr/share/perl5/vendor_perl /usr/lib/perl5 /usr/share/perl5 .).
+BEGIN failed--compilation aborted.
+
+[root@localhost Downloads]# yum provides "perl(Date::Format)"
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.aol.in
+ * extras: centos.aol.in
+ * updates: centos.aol.in
+1:perl-TimeDate-1.16-11.1.el6.noarch : A Perl module for time and date manipulation
+Repo        : base
+Matched from:
+Other       : perl(Date::Format)
+
+
+[root@localhost Downloads]# yum list perl-TimeDate.noarch
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.aol.in
+ * extras: centos.aol.in
+ * updates: centos.aol.in
+Available Packages
+perl-TimeDate.noarch                                           1:1.16-11.1.el6                                           base
+
+
+[root@localhost Downloads]# yum install perl-TimeDate -y
+
+[root@localhost scripts]# ./perl_mod_ver.sh Date::Format
+2.22
+
+++++
+
+[root@localhost Downloads]# wget dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+
+[root@localhost Downloads]# wget rpms.famillecollet.com/enterprise/remi-release-6.rpm
+
+[root@localhost Downloads]# rpm -ivh epel-release-6-8.noarch.rpm
+
+[root@localhost Downloads]# rpm -ivh remi-release-6.rpm
+
+[root@localhost Downloads]# ls -1 /etc/yum.repos.d/epel* /etc/yum.repos.d/remi.repo
+/etc/yum.repos.d/epel.repo
+/etc/yum.repos.d/epel-testing.repo
+/etc/yum.repos.d/remi.repo
+
+[root@localhost Downloads]# cd /etc/yum.repos.d/
+[root@localhost yum.repos.d]# cp remi.repo remi.repo.bk
+
+[root@localhost yum.repos.d]# cat remi.repo
+
+[remi]
+name=Les RPM de remi pour Enterprise Linux 6 - $basearch
+#baseurl=http://rpms.famillecollet.com/enterprise/6/remi/$basearch/
+mirrorlist=http://rpms.famillecollet.com/enterprise/6/remi/mirror
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-remi
+
+
+[root@localhost Downloads]# yum install perl-Spreadsheet-XLSX
+
+[root@localhost Downloads]# ./perl_mod_ver.sh Spreadsheet::XLSX
+0.13
+
+++++
+
+[root@localhost Downloads]# wget dl.fedoraproject.org/pub/epel/6/i386/perl-Spreadsheet-ParseExcel-0.5900-1.el6.i686.rpm
+
+[root@localhost Downloads]# yum install perl-Spreadsheet-ParseExcel-0.5900-1.el6.i686.rpm
+
+[root@localhost Downloads]# ./perl_mod_ver.sh Spreadsheet::ParseExcel
+0.59
+
+++++

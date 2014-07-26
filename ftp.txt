@@ -1,0 +1,134 @@
+Ref: http://ostechnix.wordpress.com/2013/12/15/setup-ftp-server-step-by-step-in-centos-6-x-rhel-6-x-scientific-linux-6-x/
+
+$ ifconfig
+eth0      Link encap:Ethernet  HWaddr 08:00:27:A9:71:2E
+          inet addr:192.168.1.101  Bcast:192.168.1.255  Mask:255.255.255.0
+		  
+$ service iptables stop
+$ service ip6tables stop
+
+$ yum install -y vsftpd
+
+$ cat /etc/vsftpd/vsftpd.conf 
+
+anonymous_enable=NO
+local_enable=YES
+chroot_local_user=YES
+
+$ yum install -y ftp
+
+$ setsebool -P ftp_home_dir on
+
+$ service vsftpd start
+
+$ ftp 192.168.1.101
+Connected to 192.168.1.101 (192.168.1.101).
+220 (vsFTPd 2.2.2)
+Name (192.168.1.101:root): dattan1
+331 Please specify the password.
+Password:
+230 Login successful.
+Remote system type is UNIX.
+Using binary mode to transfer files.
+
+++++
+
+[root@localhost ~]# rpm -qa | grep ftp
+ftp-0.17-54.el6.i686
+vsftpd-2.2.2-11.el6_4.1.i686
+
+[root@localhost ~]# rpm -e ftp-0.17-54.el6.i686
+
+[root@localhost ~]# rpm -qa | grep ftp
+vsftpd-2.2.2-11.el6_4.1.i686
+
+++++
+
+$ uname -a
+Linux localhost.localdomain 2.6.32-431.el6.i686 #1 SMP Fri Nov 22 00:26:36 UTC 2013 i686 i686 i386 GNU/Linux
+
+$  cat /etc/redhat-release
+CentOS release 6.5 (Final)
+
+CentOS RPM repo
+http://mirror.centos.org/centos/
+
+CentOS 6.5 RPM repo
+http://mirror.centos.org/centos/6.5/os/i386/Packages/
+
+++++
+
+$ wget mirror.centos.org/centos/6.5/os/i386/Packages/ftp-0.17-54.el6.i686.rpm
+
+$ rpm -ivh ftp-0.17-54.el6.i686.rpm
+
+$  rpm -qa | grep ftp
+vsftpd-2.2.2-11.el6_4.1.i686
+ftp-0.17-54.el6.i686
+
+++++
+
+[root@localhost Downloads]# yum info ftp
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.aol.in
+ * extras: centos.aol.in
+ * updates: centos.aol.in
+Installed Packages
+Name        : ftp
+Arch        : i686
+Version     : 0.17
+Release     : 54.el6
+Size        : 91 k
+Repo        : installed
+From repo   : base
+Summary     : The standard UNIX FTP (File Transfer Protocol) client
+URL         : ftp://ftp.uk.linux.org/pub/linux/Networking/netkit
+License     : BSD with advertising
+Description : The ftp package provides the standard UNIX command-line FTP (File
+            : Transfer Protocol) client.  FTP is a widely used protocol for
+            : transferring files over the Internet and for archiving files.
+            :
+            : If your system is on a network, you should install ftp in order to do
+            : file transfers.
+
+[root@localhost Downloads]# rpm -qa | grep ftp
+vsftpd-2.2.2-11.el6_4.1.i686
+ftp-0.17-54.el6.i686
+
+[root@localhost Downloads]# yum erase ftp
+
+[root@localhost Downloads]# rpm -qa | grep ftp
+vsftpd-2.2.2-11.el6_4.1.i686
+
+[root@localhost Downloads]# yum info ftp
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.aol.in
+ * extras: centos.aol.in
+ * updates: centos.aol.in
+Available Packages
+Name        : ftp
+Arch        : i686
+Version     : 0.17
+Release     : 54.el6
+Size        : 56 k
+Repo        : base
+Summary     : The standard UNIX FTP (File Transfer Protocol) client
+URL         : ftp://ftp.uk.linux.org/pub/linux/Networking/netkit
+License     : BSD with advertising
+Description : The ftp package provides the standard UNIX command-line FTP (File
+            : Transfer Protocol) client.  FTP is a widely used protocol for
+            : transferring files over the Internet and for archiving files.
+            :
+            : If your system is on a network, you should install ftp in order to do
+            : file transfers.
+
+			
+[root@localhost Downloads]# yum install ftp -y
+
+[root@localhost Downloads]# rpm -qa | grep ftp
+ftp-0.17-54.el6.i686
+vsftpd-2.2.2-11.el6_4.1.i686
+
+++++
