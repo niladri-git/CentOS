@@ -1,5 +1,35 @@
 Ref: http://ostechnix.wordpress.com/2013/12/15/setup-ftp-server-step-by-step-in-centos-6-x-rhel-6-x-scientific-linux-6-x/
 
+# cat /etc/sysconfig/network-scripts/ifcfg-eth0
+DEVICE=eth0
+HWADDR=08:00:27:A9:71:2E
+TYPE=Ethernet
+UUID=7dbaf698-d278-4692-87f1-e77cbaefdcda
+ONBOOT=yes
+NM_CONTROLLED=no
+BOOTPROTO=static
+IPADDR=192.168.1.101
+NETMASK=255.255.255.0
+GATEWAY=192.168.1.1
+
+++++
+
+# cat /etc/sysconfig/network-scripts/ifcfg-eth0:1
+DEVICE=eth0:1
+HWADDR=08:00:27:A9:71:2E
+TYPE=Ethernet
+UUID=7dbaf698-d278-4692-87f1-e77cbaefdcda
+ONBOOT=yes
+NM_CONTROLLED=no
+BOOTPROTO=static
+IPADDR=192.168.1.102
+NETMASK=255.255.255.0
+GATEWAY=192.168.1.1
+
+# service network restart
+
++++
+
 $ ifconfig
 eth0      Link encap:Ethernet  HWaddr 08:00:27:A9:71:2E
           inet addr:192.168.1.101  Bcast:192.168.1.255  Mask:255.255.255.0

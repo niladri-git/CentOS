@@ -1,0 +1,110 @@
+VBox Host only Ethernet Adapter Settings:
+
+Host:
+
+Network Connections:
+
+Desktop -> My Network places -> View n/w connections -> VBox Host-only n/w -> Enable
+
+
+D:\Documents and Settings\niladri datta>ipconfig /all
+
+Windows IP Configuration
+
+        Host Name . . . . . . . . . . . . : niladri
+        Primary Dns Suffix  . . . . . . . :
+        Node Type . . . . . . . . . . . . : Unknown
+        IP Routing Enabled. . . . . . . . : No
+        WINS Proxy Enabled. . . . . . . . : No
+
+Ethernet adapter Local Area Connection:
+
+        Media State . . . . . . . . . . . : Media disconnected
+        Description . . . . . . . . . . . : Broadcom NetLink (TM) Fast Ethernet
+        Physical Address. . . . . . . . . : 00-1B-38-A6-59-1A
+
+Ethernet adapter Network Connect Adapter:
+
+        Media State . . . . . . . . . . . : Media disconnected
+        Description . . . . . . . . . . . : Juniper Network Connect Virtual Adapter
+        Physical Address. . . . . . . . . : 00-FF-98-4C-00-8A
+
+Ethernet adapter Wireless Network Connection:
+
+        Media State . . . . . . . . . . . : Media disconnected
+        Description . . . . . . . . . . . : Broadcom 802.11g Network Adapter
+        Physical Address. . . . . . . . . : 00-21-00-28-2D-5B
+
+Ethernet adapter Bluetooth Network:
+
+        Media State . . . . . . . . . . . : Media disconnected
+        Description . . . . . . . . . . . : Bluetooth LAN Access Server Driver
+        Physical Address. . . . . . . . . : 00-1E-4C-EB-18-1E
+
+Ethernet adapter VirtualBox Host-Only Network:
+
+        Connection-specific DNS Suffix  . :
+        Description . . . . . . . . . . . : VirtualBox Host-Only Ethernet Adapter
+        Physical Address. . . . . . . . . : 08-00-27-00-14-14
+        Dhcp Enabled. . . . . . . . . . . : No
+        IP Address. . . . . . . . . . . . : 192.168.1.10
+        Subnet Mask . . . . . . . . . . . : 255.255.255.0
+        Default Gateway . . . . . . . . . :
+
++++
+
+Guest:
+
+CentOS
+
+# pwd
+/etc/sysconfig/network-scripts
+
+# cat ifcfg-eth0
+DEVICE=eth0
+HWADDR=08:00:27:A9:71:2E
+TYPE=Ethernet
+UUID=7dbaf698-d278-4692-87f1-e77cbaefdcda
+ONBOOT=yes
+NM_CONTROLLED=no
+BOOTPROTO=static
+IPADDR=192.168.1.100
+NETMAST=255.255.255.0
+
+# ifup eth0
+
+# ifconfig
+eth0      Link encap:Ethernet  HWaddr 08:00:27:A9:71:2E
+          inet addr:192.168.1.100  Bcast:192.168.1.255  Mask:255.255.255.0
+          inet6 addr: fe80::a00:27ff:fea9:712e/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:225 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:129 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:22040 (21.5 KiB)  TX bytes:18035 (17.6 KiB)
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:2 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:2 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:198 (198.0 b)  TX bytes:198 (198.0 b)
+
+
+# ping 192.168.1.10
+PING 192.168.1.10 (192.168.1.10) 56(84) bytes of data.
+64 bytes from 192.168.1.10: icmp_seq=1 ttl=128 time=0.790 ms
+64 bytes from 192.168.1.10: icmp_seq=2 ttl=128 time=0.632 ms
+
+(Host's VirtualBox Host-Only Network Ethernet adapter reachable)
+
+Note: Only after disabling the Host's VirtualBox Host-Only Network Ethernet adapter one can reach the internet from the Host.
+
+D:\Documents and Settings\niladri datta>ping 192.168.1.1
+
+Reply from 192.168.1.1: bytes=32 time=1ms TTL=254
+Reply from 192.168.1.1: bytes=32 time=1ms TTL=254
+
++++

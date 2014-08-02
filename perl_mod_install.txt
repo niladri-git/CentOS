@@ -179,3 +179,36 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-remi
 0.59
 
 ++++
+
+[root@localhost Downloads]# ./perl_mod_ver.sh Text::CSV
+Can't locate Text/CSV.pm in @INC (@INC contains: /usr/local/lib/perl5 /usr/local/share/perl5 /usr/lib/perl5/vendor_perl /usr/share/perl5/vendor_perl /usr/lib/perl5 /usr/share/perl5 .).
+BEGIN failed--compilation aborted.
+
+[root@localhost Downloads]# yum install perl-Text-CSV
+
+[root@localhost Downloads]# ./perl_mod_ver.sh Text::CSV
+1.16
+
+++++
+
+[root@localhost Downloads]# yum provides "perl(Term::ReadKey)"
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.aol.in
+ * epel: epel.mirror.net.in
+ * extras: centos.aol.in
+ * remi: remi.mirror.net.in
+ * updates: centos.aol.in
+perl-TermReadKey-2.30-13.el6.i686 : A perl module for simple terminal control
+Repo        : base
+Matched from:
+Other       : perl(Term::ReadKey)
+
+
+
+[root@localhost Downloads]# yum -y install perl-TermReadKey
+
+[root@localhost Downloads]# ./perl_mod_ver.sh Term::ReadKey
+2.30
+
+++++
